@@ -1,0 +1,12 @@
+{
+  "name": "team-code-ctrl-root",
+  "version": "1.0.0",
+  "scripts": {
+    "start:server": "cd server && npm start",
+    "start:client": "cd client/xs-records && npm start",
+    "dev": "npx concurrently \"npm run start:server\" \"npm run start:client\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

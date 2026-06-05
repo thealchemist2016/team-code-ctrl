@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 
 class AddAlbum extends Component {
 
@@ -22,7 +23,7 @@ class AddAlbum extends Component {
   }
 
   handleSubmit = (event) => {
-
+    event.preventDefault();
     fetch('/albums/add', {
       method: 'post',
       body: JSON.stringify(this.state),
@@ -32,12 +33,29 @@ class AddAlbum extends Component {
       }
     })
       .then((res) => res.json())
-      .then((data) => this.setState({redirect: data.message}))
+      .then((data) => {
+        if (data.id) {
+          this.setState({ redirect: true });
+        } else {
+          alert(data.message || 'Failed to add album');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('An error occurred while adding the album.');
+      });
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/add-track" />
+    }
   }
 
   render() {
     return (
       <Container fluid>
+        {this.renderRedirect()}
         <h2 className="text-center"> Add a new Album </h2>
         <hr />
         <Row>
@@ -57,9 +75,9 @@ class AddAlbum extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="cover">Upload Cover </Label>
-                <Input onChange={this.onChange} type="file" />
+                <Input onChange={this.onChange} type="file" name="cover" id="cover" required />
               </FormGroup>
-              <Button  href="/add-track">Continue to Tracks</Button>
+              <Button type="submit">Continue to Tracks</Button>
             </Form>
           </Col>
         </Row>

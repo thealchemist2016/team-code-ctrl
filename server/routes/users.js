@@ -1,73 +1,86 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/userModel');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const withAuth = require('../middleware');
+const db = require('../db');
 const secret = 'gracie';
 
-
 router.post('/login', function(req, res, next) {
-
   const { username, password } = req.body;
+  const user = db.findUserByUsername(username);
 
-  User.findOne({username}, function(err, user) {
-    if( err ) {
-      console.error(err);
-      res.status(500)
-      .json({
-        error: 'Internal monkey business, please try again'
-      });
-    } else if (!user) {
-      res.status(401)
-        .json({
-          error: 'Incorrect username or password'
-        });
-    } else {
-      user.isCorrectPassword(password, function(err, same) {
-        if(err) {
-          res.status(500)
-            .json({
-              error: 'Internal monkey business, try again'
-            });
-        } else if (!same) {
-          res.status(401)
-          .json({ error: 'Incorrect username or password'});
-        } else {
-          //Issue token
-          const payload = { username };
-          const token = jwt.sign(payload,secret, {
-            expiresIn: '1h'
-          });
-          res.cookie('token', token, { httpOnly: true })
-          .status(200)
-          .json({ redirect: true, message: 'Logged in successfully' });
-        }
-      });
+  if (!user) {
+    return res.status(401).json({ error: 'Incorrect username or password' });
+  }
+
+  const same = db.comparePassword(password, user.password);
+  if (!same) {
+    return res.status(401).json({ error: 'Incorrect username or password' });
+  }
+
+  // Issue token
+  const payload = { username };
+  const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+  res.cookie('token', token, { httpOnly: true })
+    .status(200)
+    .json({ redirect: true, message: 'Logged in successfully' });
+});
+
+router.post('/register', function(req, res, next){
+  const { fname, lname, email, username, password, tosAccepted } = req.body;
+
+  if (!fname || typeof fname !== 'string' || fname.trim() === '' ||
+      !lname || typeof lname !== 'string' || lname.trim() === '' ||
+      !email || typeof email !== 'string' || email.trim() === '' ||
+      !username || typeof username !== 'string' || username.trim() === '' ||
+      !password || typeof password !== 'string' || password.trim() === '') {
+    return res.status(400).json({ success: false, error: "All fields are required" });
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ success: false, error: "Invalid email format" });
+  }
+
+  if (!tosAccepted) {
+    return res.status(400).json({ message: "Terms of Service must be accepted.", success: false });
+  }
+  if (db.findUserByUsername(username)) {
+    return res.status(400).json({ message: "Username already exists.", success: false });
+  }
+  if (db.findUserByEmail(email)) {
+    return res.status(400).json({ message: "Email already exists.", success: false });
+  }
+  try {
+    db.saveUser({ fname, lname, email, username, password, tosAccepted: true });
+    res.status(200).json({ message: "New user registered", success: true });
+  } catch (err) {
+    res.status(500).json({ message: "Error registering new user. Please try again.", success: false });
+  }
+});
+
+router.get('/verify', withAuth, function(req, res, next) {
+  const user = db.findUserByUsername(req.username);
+  if (!user) {
+    return res.status(401).json({ success: false, error: 'Invalid token user' });
+  }
+  res.status(200).json({
+    success: true,
+    user: {
+      username: user.username,
+      role: user.role,
+      balance: user.balance
     }
   });
 });
 
-
-router.post('/register', function(req, res, next){
-
-  const { fname, lname, email, username, password } = req.body;
-
-  const user = new User({ fname, lname, email, username, password });
-
-  user.save(function(err) {
-    if(err) {
-      res.status(500)
-      .send("Error registering new user. Please try again.");
-    } else {
-      res.status(200).send("New user registered");
-    }
-  });
+router.post('/logout', function(req, res, next) {
+  res.clearCookie('token');
+  res.status(200).json({ success: true, message: 'Logged out successfully' });
 });
 
 router.get('/dashboard', withAuth, function(req, res, next) {
   res.send('The dashboard');
 });
-
 
 module.exports = router;

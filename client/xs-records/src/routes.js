@@ -6,16 +6,15 @@ import Login from './components/login-form';
 import Home from './components/home';
 import AddAlbum from './components/add-album';
 import AddTrack from './components/add-track';
-
-
+import ProtectedRoute from './components/ProtectedRoute';
 
 export default () => 
   <Switch>
-    <Route path="/dashboard" exact component={Dashboard} />
+    <ProtectedRoute path="/dashboard" exact component={Dashboard} />
     <Route path="/login" exact component={Login} />
     <Route path="/register" exact component={Register} />
     <Route path="/" exact component={Home} />
-    <Route path="/add-album" exact component={AddAlbum} />
-    <Route path="/add-track" exact component={AddTrack} />
+    <ProtectedRoute path="/add-album" exact component={AddAlbum} />
+    <ProtectedRoute path="/add-track" exact component={AddTrack} />
   </Switch>;
 

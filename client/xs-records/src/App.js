@@ -1,28 +1,20 @@
 import React, { Component } from 'react';
 import AppNav from './components/nav';
 import Routes from './routes';
+import { AuthProvider } from './context/AuthContext';
 
 class App extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      users: [],
-    };
-  }
-
   render() {
     return (
-      <main role="main" className="App">
-        <AppNav />
-        <Routes />
-      </main>
-      );
+      <AuthProvider>
+        <main role="main" className="App">
+          <AppNav />
+          <Routes />
+        </main>
+      </AuthProvider>
+    );
   }
 }
-
-
 
 export default App;
 

@@ -11,9 +11,9 @@
     "reactstrap": "^8.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "cross-env PORT=3002 NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env PORT=3002 NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts test",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3001",
@@ -33,6 +33,7 @@
     ]
   },
   "devDependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "cross-env": "^7.0.3"
   }
 }

@@ -1,0 +1,31 @@
+{
+  "users": [
+    {
+      "fname": "Michael",
+      "lname": "Byrd",
+      "email": "michaelbyrd7741@gmail.com",
+      "username": "michaelbyrd7741@gmail.com",
+      "password": "$2a$10$sbaZciiv/QfxzdluqKVf6uJozLNT66AUzeSRorruB9GoNHrjKnS12",
+      "_id": "u-1780631162676"
+    }
+  ],
+  "albums": [
+    {
+      "albumName": "123",
+      "numberOfTracks": 12,
+      "artist": "123",
+      "cover": "",
+      "_id": "a-1780631191856",
+      "tracks": [
+        "t-1780631194913"
+      ]
+    }
+  ],
+  "tracks": [
+    {
+      "_id": "t-1780631194913",
+      "title": "123",
+      "album": "a-1780631191856"
+    }
+  ]
+}
