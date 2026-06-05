@@ -60,7 +60,7 @@ class ContactUs extends Component {
           .then(tdata => {
             this.setState({ tickets: Array.isArray(tdata) ? tdata : [] });
           })
-          .catch(() => {});
+          .catch(() => { });
       })
       .catch(err => {
         console.error(err);

@@ -68,7 +68,7 @@ class Balance extends Component {
             .then(wdata => {
               this.setState({ withdrawals: Array.isArray(wdata) ? wdata : [] });
             })
-            .catch(() => {});
+            .catch(() => { });
         } else {
           this.setState({ message: data.error || 'Failed to submit withdrawal.', messageType: 'danger' });
         }
