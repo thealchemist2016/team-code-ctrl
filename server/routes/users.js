@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const withAuth = require('../middleware');
 const secret = 'gracie';
@@ -40,7 +40,8 @@ router.post('/login', function(req, res, next) {
             expiresIn: '1h'
           });
           res.cookie('token', token, { httpOnly: true })
-          .sendStatus(200);
+          .status(200)
+          .json({ redirect: true, message: 'Logged in successfully' });
         }
       });
     }
