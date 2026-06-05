@@ -32,7 +32,10 @@
       "user": "u-1780631162676",
       "status": "approved",
       "_id": "a-seed-001",
-      "tracks": ["t-seed-001", "t-seed-002"]
+      "tracks": [
+        "t-seed-001",
+        "t-seed-002"
+      ]
     },
     {
       "albumName": "Neon Dreams",
@@ -42,7 +45,9 @@
       "user": "u-1780631162676",
       "status": "pending",
       "_id": "a-seed-002",
-      "tracks": ["t-seed-003"]
+      "tracks": [
+        "t-seed-003"
+      ]
     },
     {
       "albumName": "Lost Signal",
@@ -71,7 +76,29 @@
       "cover": "",
       "status": "pending",
       "_id": "a-1780631191856",
-      "tracks": ["t-1780631194913"]
+      "tracks": [
+        "t-1780631194913"
+      ]
+    },
+    {
+      "albumName": "me",
+      "numberOfTracks": 1,
+      "artist": "123",
+      "cover": "C:\\fakepath\\Screenshot (2).png",
+      "user": "u-1780631162676",
+      "status": "pending",
+      "_id": "a-1780639809291",
+      "tracks": []
+    },
+    {
+      "albumName": "123",
+      "numberOfTracks": 123,
+      "artist": "123",
+      "cover": "C:\\fakepath\\Screenshot (1).png",
+      "user": "u-1780631162676",
+      "status": "pending",
+      "_id": "a-1780639838875",
+      "tracks": []
     }
   ],
   "tracks": [
