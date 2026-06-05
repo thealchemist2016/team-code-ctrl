@@ -83,4 +83,44 @@ router.get('/dashboard', withAuth, function(req, res, next) {
   res.send('The dashboard');
 });
 
+// GET /profile — return full user profile (excluding password)
+router.get('/profile', withAuth, function(req, res) {
+  const user = db.findUserByUsername(req.username);
+  if (!user) {
+    return res.status(404).json({ success: false, error: 'User not found' });
+  }
+  const { password, ...profile } = user;
+  res.json({ success: true, user: profile });
+});
+
+// PUT /profile — update address and bankInfo fields only
+router.put('/profile', withAuth, function(req, res) {
+  const user = db.findUserByUsername(req.username);
+  if (!user) {
+    return res.status(404).json({ success: false, error: 'User not found' });
+  }
+  const updates = {};
+  if (req.body.address !== undefined) updates.address = req.body.address;
+  if (req.body.bankInfo !== undefined) updates.bankInfo = req.body.bankInfo;
+  const updated = db.updateUser(req.username, updates);
+  if (!updated) {
+    return res.status(500).json({ success: false, error: 'Error updating profile' });
+  }
+  const { password, ...profile } = updated;
+  res.json({ success: true, user: profile });
+});
+
+// POST /profile/tax-doc — upload tax document
+const upload = require('../uploadConfig');
+router.post('/profile/tax-doc', withAuth, upload.single('taxDoc'), function(req, res) {
+  if (!req.file) {
+    return res.status(400).json({ success: false, error: 'No file uploaded' });
+  }
+  const updated = db.updateUser(req.username, { taxDoc: req.file.filename });
+  if (!updated) {
+    return res.status(500).json({ success: false, error: 'Error saving tax document' });
+  }
+  res.json({ success: true, message: 'Tax document uploaded', filename: req.file.filename });
+});
+
 module.exports = router;

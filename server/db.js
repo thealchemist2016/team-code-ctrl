@@ -17,9 +17,14 @@ const readData = () => {
     }
   }
 
-  // Ensure standard and admin users are seeded
+  // Ensure all collections exist
   let changed = false;
   if (!data.users) data.users = [];
+  if (!data.albums) { data.albums = []; changed = true; }
+  if (!data.tracks) { data.tracks = []; changed = true; }
+  if (!data.notifications) { data.notifications = []; changed = true; }
+  if (!data.tickets) { data.tickets = []; changed = true; }
+  if (!data.withdrawals) { data.withdrawals = []; changed = true; }
 
   // 1. Seed standard user if not exists
   let standardUser = data.users.find(u => u.username === 'michaelbyrd7741@gmail.com');
@@ -178,5 +183,76 @@ module.exports = {
     }
     writeData(data);
     return track;
+  },
+
+  // Album queries
+  getAlbumsByUser: (userId) => {
+    return readData().albums.filter(a => a.user === userId);
+  },
+  getAlbumsByStatus: (status) => {
+    return readData().albums.filter(a => a.status === status);
+  },
+  getAlbumsByUserAndStatus: (userId, status) => {
+    return readData().albums.filter(a => a.user === userId && a.status === status);
+  },
+  updateAlbumStatus: (albumId, status) => {
+    const data = readData();
+    const album = data.albums.find(a => a._id === albumId);
+    if (album) {
+      album.status = status;
+      writeData(data);
+      return album;
+    }
+    return null;
+  },
+
+  // Notifications
+  getNotifications: () => readData().notifications,
+  getNotificationsByUser: (userId) => {
+    return readData().notifications.filter(n => n.userId === userId);
+  },
+  saveNotification: (notification) => {
+    const data = readData();
+    notification._id = 'n-' + Date.now();
+    data.notifications.push(notification);
+    writeData(data);
+    return notification;
+  },
+
+  // Tickets
+  getTickets: () => readData().tickets,
+  getTicketsByUser: (userId) => {
+    return readData().tickets.filter(t => t.userId === userId);
+  },
+  saveTicket: (ticket) => {
+    const data = readData();
+    ticket._id = 'tk-' + Date.now();
+    data.tickets.push(ticket);
+    writeData(data);
+    return ticket;
+  },
+  addTicketReply: (ticketId, reply) => {
+    const data = readData();
+    const ticket = data.tickets.find(t => t._id === ticketId);
+    if (ticket) {
+      if (!ticket.replies) ticket.replies = [];
+      ticket.replies.push(reply);
+      writeData(data);
+      return ticket;
+    }
+    return null;
+  },
+
+  // Withdrawals
+  getWithdrawals: () => readData().withdrawals,
+  getWithdrawalsByUser: (userId) => {
+    return readData().withdrawals.filter(w => w.userId === userId);
+  },
+  saveWithdrawal: (withdrawal) => {
+    const data = readData();
+    withdrawal._id = 'w-' + Date.now();
+    data.withdrawals.push(withdrawal);
+    writeData(data);
+    return withdrawal;
   }
 };

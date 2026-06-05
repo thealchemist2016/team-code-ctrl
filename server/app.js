@@ -10,6 +10,10 @@ let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let albumRouter = require('./routes/albums');
 let tracksRouter = require('./routes/tracks');
+let notificationsRouter = require('./routes/notifications');
+let ticketsRouter = require('./routes/tickets');
+let withdrawalsRouter = require('./routes/withdrawals');
+let adminRouter = require('./routes/admin');
 
 const app = express();
 
@@ -26,5 +30,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/albums', albumRouter);
 app.use('/tracks', tracksRouter);
+app.use('/notifications', notificationsRouter);
+app.use('/tickets', ticketsRouter);
+app.use('/withdrawals', withdrawalsRouter);
+app.use('/admin', adminRouter);
 
 module.exports = app;

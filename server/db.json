@@ -6,26 +6,135 @@
       "email": "michaelbyrd7741@gmail.com",
       "username": "michaelbyrd7741@gmail.com",
       "password": "$2a$10$sbaZciiv/QfxzdluqKVf6uJozLNT66AUzeSRorruB9GoNHrjKnS12",
-      "_id": "u-1780631162676"
+      "_id": "u-1780631162676",
+      "role": "user",
+      "balance": 197,
+      "tosAccepted": true
+    },
+    {
+      "fname": "Admin",
+      "lname": "User",
+      "email": "admin@xsrecords.com",
+      "username": "admin@xsrecords.com",
+      "password": "$2a$10$QQV.4gsl.QCDE2t7AvCTLuDKkBHgfZjaszT.KNxajgvaXRv.8L.cK",
+      "role": "admin",
+      "balance": 0,
+      "tosAccepted": true,
+      "_id": "u-admin-seed"
     }
   ],
   "albums": [
+    {
+      "albumName": "Midnight Frequencies",
+      "numberOfTracks": 8,
+      "artist": "Michael Byrd",
+      "cover": "",
+      "user": "u-1780631162676",
+      "status": "approved",
+      "_id": "a-seed-001",
+      "tracks": ["t-seed-001", "t-seed-002"]
+    },
+    {
+      "albumName": "Neon Dreams",
+      "numberOfTracks": 5,
+      "artist": "Michael Byrd",
+      "cover": "",
+      "user": "u-1780631162676",
+      "status": "pending",
+      "_id": "a-seed-002",
+      "tracks": ["t-seed-003"]
+    },
+    {
+      "albumName": "Lost Signal",
+      "numberOfTracks": 10,
+      "artist": "Michael Byrd",
+      "cover": "",
+      "user": "u-1780631162676",
+      "status": "rejected",
+      "_id": "a-seed-003",
+      "tracks": []
+    },
+    {
+      "albumName": "Unfinished Business",
+      "numberOfTracks": 6,
+      "artist": "Michael Byrd",
+      "cover": "",
+      "user": "u-1780631162676",
+      "status": "incomplete",
+      "_id": "a-seed-004",
+      "tracks": []
+    },
     {
       "albumName": "123",
       "numberOfTracks": 12,
       "artist": "123",
       "cover": "",
+      "status": "pending",
       "_id": "a-1780631191856",
-      "tracks": [
-        "t-1780631194913"
-      ]
+      "tracks": ["t-1780631194913"]
     }
   ],
   "tracks": [
+    {
+      "_id": "t-seed-001",
+      "title": "Midnight Wave",
+      "album": "a-seed-001",
+      "user": "u-1780631162676"
+    },
+    {
+      "_id": "t-seed-002",
+      "title": "Frequency Shift",
+      "album": "a-seed-001",
+      "user": "u-1780631162676"
+    },
+    {
+      "_id": "t-seed-003",
+      "title": "Neon Pulse",
+      "album": "a-seed-002",
+      "user": "u-1780631162676"
+    },
     {
       "_id": "t-1780631194913",
       "title": "123",
       "album": "a-1780631191856"
     }
-  ]
+  ],
+  "notifications": [
+    {
+      "_id": "n-seed-001",
+      "userId": "u-1780631162676",
+      "message": "Your album 'Midnight Frequencies' has been approved and is now live on all platforms!",
+      "type": "success",
+      "read": false,
+      "createdAt": "2026-05-28T14:30:00.000Z"
+    },
+    {
+      "_id": "n-seed-002",
+      "userId": "u-1780631162676",
+      "message": "Your album 'Lost Signal' was rejected. Please review the submission guidelines and resubmit.",
+      "type": "warning",
+      "read": false,
+      "createdAt": "2026-06-01T09:15:00.000Z"
+    }
+  ],
+  "tickets": [
+    {
+      "_id": "tk-seed-001",
+      "userId": "u-1780631162676",
+      "username": "michaelbyrd7741@gmail.com",
+      "subject": "Payment not received for May",
+      "message": "I haven't received my royalty payment for the month of May. Can you look into this?",
+      "category": "payments",
+      "status": "open",
+      "replies": [
+        {
+          "message": "Hi Michael, we're looking into your payment. Please allow 2-3 business days for processing.",
+          "username": "admin@xsrecords.com",
+          "createdAt": "2026-06-02T11:00:00.000Z"
+        }
+      ],
+      "createdAt": "2026-06-01T16:45:00.000Z"
+    }
+  ],
+  "withdrawals": []
 }
