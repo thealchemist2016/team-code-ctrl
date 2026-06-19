@@ -37,7 +37,7 @@ class AppNav extends Component {
           borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
           padding: '12px 24px'
         }}>
-          <NavbarBrand href="/" style={{
+          <NavbarBrand href="#/" style={{
             fontWeight: 700,
             fontSize: '1.5rem',
             background: 'linear-gradient(135deg, #7c3aed, #a855f7)',

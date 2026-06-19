@@ -39,24 +39,9 @@ class MusicPlayer extends Component {
     const volumeLevel = isMuted ? 0 : volume * 100;
 
     return (
-      <div style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: '80px',
-        background: 'rgba(10, 10, 15, 0.95)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 24px',
-        zIndex: 2000,
-        transition: 'all 0.3s ease'
-      }}>
+      <div className="music-player-container">
         {/* Track Info */}
-        <div style={{ display: 'flex', alignItems: 'center', width: '250px', minWidth: '200px' }}>
+        <div className="music-player-track-info">
           {currentTrack ? (
             <React.Fragment>
               <div style={{
@@ -104,9 +89,9 @@ class MusicPlayer extends Component {
         </div>
 
         {/* Player Controls */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+        <div className="music-player-controls-container">
           {/* Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div className="music-player-buttons-wrapper">
             {/* Shuffle */}
             <button
               onClick={toggleShuffle}
@@ -141,9 +126,9 @@ class MusicPlayer extends Component {
               ⏮
             </button>
 
-            {/* Play/Pause */}
             <button
               onClick={togglePlay}
+              className="music-player-play-btn"
               style={{
                 background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
                 border: 'none',
@@ -201,12 +186,13 @@ class MusicPlayer extends Component {
           </div>
 
           {/* Progress Bar */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', maxWidth: '600px' }}>
-            <span style={{ color: '#64748b', fontSize: '0.75rem', minWidth: '35px', textAlign: 'right' }}>
+          <div className="music-player-progress-wrapper">
+            <span className="music-player-time" style={{ color: '#64748b', fontSize: '0.75rem', minWidth: '35px', textAlign: 'right' }}>
               {this.formatTime(currentTime)}
             </span>
             <div
               onClick={this.handleProgressClick}
+              className="music-player-bar-container progress-bar-interactive"
               style={{
                 flex: 1,
                 height: '4px',
@@ -241,14 +227,14 @@ class MusicPlayer extends Component {
                 }} />
               </div>
             </div>
-            <span style={{ color: '#64748b', fontSize: '0.75rem', minWidth: '35px' }}>
+            <span className="music-player-time" style={{ color: '#64748b', fontSize: '0.75rem', minWidth: '35px' }}>
               {this.formatTime(duration)}
             </span>
           </div>
         </div>
 
         {/* Volume Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '160px', justifyContent: 'flex-end' }}>
+        <div className="music-player-volume-container">
           <button
             onClick={toggleMute}
             style={{

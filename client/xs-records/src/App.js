@@ -14,6 +14,7 @@ class App extends Component {
           <main role="main" className="App" style={{ paddingBottom: '80px' }}>
             <AppNav />
             <Routes />
+            <Footer />
           </main>
           <MusicPlayer />
         </PlayerProvider>

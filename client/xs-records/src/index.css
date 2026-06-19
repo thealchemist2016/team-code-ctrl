@@ -1242,3 +1242,121 @@ select.form-control {
   font-weight: 600;
   color: var(--accent-teal);
 }
+
+/* ===== GLOBAL POINTER FOR CLICKABLES ===== */
+button,
+.btn,
+a,
+select,
+input[type="button"],
+input[type="submit"],
+.nav-link,
+.sidebar-nav-link,
+[role="button"],
+.progress-bar-interactive {
+  cursor: pointer !important;
+}
+
+/* ===== RESPONSIVE MUSIC PLAYER ===== */
+.music-player-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  z-index: 2000;
+  transition: all 0.3s ease;
+}
+
+.music-player-track-info {
+  display: flex;
+  align-items: center;
+  width: 250px;
+  min-width: 200px;
+  transition: all 0.3s ease;
+}
+
+.music-player-controls-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+}
+
+.music-player-buttons-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.music-player-progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.music-player-volume-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 160px;
+  justify-content: flex-end;
+  transition: all 0.3s ease;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .music-player-container {
+    height: 70px;
+    padding: 0 16px;
+  }
+  
+  .music-player-volume-container {
+    display: none !important; /* Hide volume on mobile to save space */
+  }
+  
+  .music-player-track-info {
+    width: calc(100% - 70px) !important;
+    min-width: 0 !important;
+  }
+  
+  .music-player-controls-container {
+    width: 60px !important;
+    flex: none !important;
+    align-items: flex-end !important;
+  }
+
+  /* Hide progress bar and secondary controls on mobile, show minimal play/pause and skip next */
+  .music-player-controls-container .music-player-progress-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 100% !important;
+    gap: 0 !important;
+  }
+
+  .music-player-controls-container .music-player-progress-wrapper .music-player-time {
+    display: none !important; /* Hide timestamps on mobile */
+  }
+  
+  .music-player-controls-container .music-player-progress-wrapper .music-player-bar-container {
+    border-radius: 0 !important;
+  }
+  
+  .music-player-controls-container .music-player-buttons-wrapper button:not(.music-player-play-btn) {
+    display: none !important; /* Hide shuffle, repeat, skip back/forward, only keep play/pause */
+  }
+}
+
